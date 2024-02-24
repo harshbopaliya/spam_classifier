@@ -1,0 +1,30 @@
+.spam-classifier {
+  text-align: center;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+textarea {
+  width: 60%;
+  padding: 10px;
+  margin-bottom: 20px;
+  resize: none; /* Disable textarea resizing */
+}
+
+.predict-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Add transition for a smooth effect */
+}
+
+.predict-button:hover {
+  background-color: #45a049;
+}
