@@ -6,7 +6,10 @@ const NavBar = () => {
     <div>
       <div className="navbar bg-base-100">
         <div className="flex-1">
-          <Link className="btn btn-ghost text-xl">daisyUI</Link>
+          {/* Use Link instead of a */}
+          <Link to="/" className="btn btn-ghost text-xl">
+            SMSGuard
+          </Link>
         </div>
         <div className="flex-none gap-2">
           <div className="form-control">
@@ -34,16 +37,19 @@ const NavBar = () => {
               className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
             >
               <li>
-                <Link className="justify-between">
+                {/* Use Link instead of a */}
+                <Link to="/" className="justify-between">
                   Profile
                   <span className="badge">New</span>
                 </Link>
               </li>
               <li>
-                <Link>Settings</Link>
+                {/* Use Link instead of a */}
+                <Link to="/">Settings</Link>
               </li>
               <li>
-                <Link>Logout</Link>
+                {/* Use Link instead of a */}
+                <Link to="/">Logout</Link>
               </li>
             </ul>
           </div>
