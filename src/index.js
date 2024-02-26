@@ -14,4 +14,3 @@ rootInstance.render(
     </React.StrictMode>
   </Router>
 );
-
