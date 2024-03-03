@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SMS Spam Classifier</title>
+  </head>
+  <body>
+    <h1>SMS Spam Classifier</h1>
+
+    <form id="smsForm">
+      <textarea
+        id="inputSms"
+        name="inputSms"
+        rows="4"
+        cols="50"
+        placeholder="Enter your SMS here"
+      ></textarea
+      ><br />
+
+      <button type="button" onclick="predict()">Predict</button>
+    </form>
+
+    <script>
+      function predictMessage() {
+        const inputSms = document.getElementById("inputSms").value;
+
+        if (!inputSms.trim()) {
+          alert("Please enter a message before predicting.");
+          return;
+        }
+
+        // Replace with actual API endpoint
+        const apiUrl = "http://your-smsguard-api-endpoint/predict";
+
+        // Make a simple POST request using Fetch API
+        fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: inputSms }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("result").innerHTML =
+              data.prediction === 1 ? "<h2>Spam</h2>" : "<h2>Not Spam</h2>";
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("result").innerHTML =
+              "<p>Error occurred. Check console for details.</p>";
+          });
+      }
+    </script>
+  </body>
+</html>
