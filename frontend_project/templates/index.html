@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Classifier</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #0056b3;
+            margin-bottom: 20px;
+        }
+
+        form label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .result label {
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .result p {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .result input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            button {
+                font-size: 0.9rem;
+            }
+
+            .result p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <script>
+        async function classifyMessage(event) {
+            event.preventDefault();
+
+            // Get the user input
+            const message = document.getElementById('message').value;
+
+            // Make an API call to /classify
+            const response = await fetch('/classify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ message: message }),
+            });
+
+            const data = await response.json();
+
+            // Handle the response
+            const checkbox = document.getElementById('spam-checkbox');
+            const resultText = document.getElementById('result');
+
+            if (data.status) {
+                checkbox.checked = data.is_spam; // Check if it's spam
+                resultText.innerText = data.is_spam
+                    ? '🚫 This message is classified as Spam.'
+                    : '✅ This message is not Spam.';
+                resultText.style.color = data.is_spam ? '#d9534f' : '#5cb85c';
+            } else {
+                resultText.innerText = '❌ Error: ' + data.error;
+                resultText.style.color = '#d9534f';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Spam Message Classifier</h1>
+        <form onsubmit="classifyMessage(event)">
+            <label for="message">Enter your message:</label>
+            <textarea id="message" name="message" rows="5" placeholder="Type your message here..." required></textarea>
+            <button type="submit">Classify Message</button>
+        </form>
+        <div class="result">
+            <label>
+                <input type="checkbox" id="spam-checkbox" disabled>
+                Spam?
+            </label>
+            <p id="result"></p>
+        </div>
+    </div>
+</body>
+</html>
